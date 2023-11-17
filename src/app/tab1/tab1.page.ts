@@ -11,7 +11,6 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { API_BASE_URL, API_KEY } from 'src/utils';
 
@@ -25,7 +24,6 @@ import { API_BASE_URL, API_KEY } from 'src/utils';
     IonToolbar,
     IonTitle,
     IonContent,
-    ExploreContainerComponent,
     IonSearchbar,
     IonList,
     IonItem,
