@@ -8,6 +8,7 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonBackButton,
   IonIcon,
 } from '@ionic/angular/standalone';
 import { StockDetail } from 'src/app/models/stock-detail.model';
@@ -28,6 +29,7 @@ import { addIcons } from 'ionicons';
     IonContent,
     CommonModule,
     IonIcon,
+    IonBackButton,
   ],
 })
 export class StockDetailComponent implements OnInit {
