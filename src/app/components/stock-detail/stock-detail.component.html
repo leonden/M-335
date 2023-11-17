@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="logo-container">
+      <img class="logo" src="../../assets/stonks.jpg" alt="" /><ion-title
+        >Stonks</ion-title
+      >
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="detail-container">
+    <h1>
+      {{ stockDetail.company }}
+      <ion-icon
+        class="fav-heart"
+        name="heart-outline"
+        (click)="setFav()"
+      ></ion-icon>
+    </h1>
+    <h2>
+      Current price:
+      <strong>{{ stockDetail.current | number : "1.2-2" }} USD</strong>
+    </h2>
+
+    <iframe [src]="iframeSafeUrl" class="stock-chart" frameborder="0"></iframe>
+  </div>
+</ion-content>

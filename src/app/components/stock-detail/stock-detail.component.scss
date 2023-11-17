@@ -1,0 +1,22 @@
+.detail-container {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+
+  h1 {
+    display: flex;
+    align-items: center;
+
+    .fav-heart {
+      cursor: pointer;
+    }
+  }
+
+  .stock-chart {
+    width: 100%;
+    height: 300px;
+  }
+}
