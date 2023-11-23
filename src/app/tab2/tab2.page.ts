@@ -12,6 +12,7 @@ import {
   IonButton,
   IonIcon,
   IonText,
+  ToastController,
 } from '@ionic/angular/standalone';
 import { Preferences } from '@capacitor/preferences';
 import { API_BASE_URL, API_KEY } from 'src/utils';
@@ -59,8 +60,13 @@ export class Tab2Page implements OnInit {
   companyProfile!: CompanyProfile;
   companies: Company[] = [];
   client: SupabaseClient;
+  isToastOpen: boolean = false;
+  favourite: boolean = true;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private toastController: ToastController
+  ) {
     addIcons({
       removeCircleOutline,
       trendingUpOutline,
@@ -90,16 +96,30 @@ export class Tab2Page implements OnInit {
     } catch (e) {
       console.error(e);
     }
+
+    this.isToastOpen = true;
+    const removed = 'Removed from favourites';
+    const alreadyRemoved = 'Already removed';
+    const toast = await this.toastController.create({
+      duration: 1500,
+    });
+
+    if (this.isToastOpen === true && this.favourite === true) {
+      toast.message = removed;
+    } else {
+      toast.message = alreadyRemoved;
+    }
+
+    await toast.present();
+
+    this.favourite = false;
   }
 
   async getAllFavourites() {
     Preferences.keys().then((result) => {
       const requests = result.keys.map((key) => this.getStock(key));
 
-      forkJoin(requests).subscribe(() => {
-        // All getStock requests are completed, you can now do something with this.companies
-        console.log(this.companies);
-      });
+      forkJoin(requests).subscribe(() => {});
     });
   }
 
