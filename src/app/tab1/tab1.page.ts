@@ -52,8 +52,6 @@ export class Tab1Page {
           // Assuming the response is an array of objects
           this.results = res.result;
 
-          console.log(this.results);
-
           this.results = this.results.filter((item, index, array) => {
             return (
               array.indexOf(item) === index && array.lastIndexOf(item) === index
