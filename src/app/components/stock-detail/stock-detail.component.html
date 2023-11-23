@@ -29,12 +29,12 @@
       <h2>Latest News</h2>
       <ion-list>
         <ion-item *ngFor="let news of latestNews">
-          <ion-label>
-            <a [href]="news.url"
-              ><h3>{{ news.headline }}</h3></a
-            >
-            <p>{{ news.summary }}</p>
-          </ion-label>
+          <a [href]="news.url"
+            ><ion-label class="news-label">
+              <h3>{{ news.headline }}</h3>
+              <p>{{ news.summary }}</p>
+            </ion-label></a
+          >
         </ion-item>
       </ion-list>
     </div>
