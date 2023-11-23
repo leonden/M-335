@@ -1,0 +1,33 @@
+.card {
+  position: relative;
+
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 75%;
+    border-bottom-left-radius: 100%;
+  }
+
+  .price-container {
+    display: flex;
+    align-items: center;
+
+    .current-price {
+      font-size: 1.5rem;
+    }
+
+    .icon {
+      margin-left: 10px;
+    }
+  }
+
+  .button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    margin: 0 0.5rem 0.5rem 0;
+  }
+}

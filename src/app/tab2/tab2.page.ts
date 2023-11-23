@@ -9,6 +9,9 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
+  IonButton,
+  IonIcon,
+  IonText,
 } from '@ionic/angular/standalone';
 import { Preferences } from '@capacitor/preferences';
 import { API_BASE_URL, API_KEY } from 'src/utils';
@@ -17,10 +20,16 @@ import { StockDetail } from '../models/stock-detail.model';
 import { Company } from '../models/company.model';
 import { CompanyProfile } from '../models/company-profile.model';
 import { CommonModule } from '@angular/common';
-import { switchMap, forkJoin, tap } from 'rxjs';
-import { removeCircleOutline } from 'ionicons/icons';
+import { switchMap, forkJoin, map } from 'rxjs';
+import {
+  removeCircleOutline,
+  trendingUpOutline,
+  trendingDownOutline,
+  reorderTwoOutline,
+} from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-
+import { SupabaseClient, createClient } from '@supabase/supabase-js';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -38,6 +47,9 @@ import { addIcons } from 'ionicons';
     IonCardSubtitle,
     IonCardContent,
     CommonModule,
+    IonButton,
+    IonIcon,
+    IonText,
   ],
 })
 export class Tab2Page implements OnInit {
@@ -46,13 +58,38 @@ export class Tab2Page implements OnInit {
   stockDetail!: StockDetail;
   companyProfile!: CompanyProfile;
   companies: Company[] = [];
+  client: SupabaseClient;
 
   constructor(private http: HttpClient) {
-    addIcons({ removeCircleOutline });
+    addIcons({
+      removeCircleOutline,
+      trendingUpOutline,
+      trendingDownOutline,
+      reorderTwoOutline,
+    });
+    this.client = createClient(
+      environment.supabaseUrl,
+      environment.supabaseClient
+    );
   }
 
   ngOnInit(): void {
     this.getAllFavourites();
+  }
+
+  async removeFav(symbol: string) {
+    console.log(`Removed ${symbol} from favourites`);
+
+    try {
+      Preferences.remove({ key: symbol });
+
+      const { error } = await this.client
+        .from('fav_stock')
+        .delete()
+        .eq('symbol', symbol);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async getAllFavourites() {
@@ -82,7 +119,16 @@ export class Tab2Page implements OnInit {
               `${API_BASE_URL}/stock/profile2?symbol=${symbol}&token=${API_KEY}`
             ),
           }).pipe(
-            tap((responses: any) => {
+            map((responses: any) => {
+              // Find the position of the first dash
+              const dashIndex = responses.profile.exchange.indexOf('-');
+
+              // Use substring to get the part before the dash
+              const exchange =
+                dashIndex !== -1
+                  ? responses.profile.exchange.substring(0, dashIndex).trim()
+                  : responses.profile.exchange.trim();
+
               this.stockDetail = {
                 company: company,
                 symbol: symbol,
@@ -95,7 +141,7 @@ export class Tab2Page implements OnInit {
 
               this.companyProfile = {
                 country: responses.profile.country,
-                exchange: responses.profile.exchange,
+                exchange: exchange, // Use the modified exchange here
                 name: responses.profile.name,
                 ticker: responses.profile.ticker,
                 weburl: responses.profile.weburl,

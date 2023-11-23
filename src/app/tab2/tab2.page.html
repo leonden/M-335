@@ -1,23 +1,56 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <div class="logo-container">
-      <img class="logo" src="../../assets/stonks.jpg" alt="" /><ion-title
-        >Stonks</ion-title
+      <img class="logo" src="../../assets/stonks.jpg" alt="" /><a routerLink="/"
+        ><ion-title>Stonks</ion-title></a
       >
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let company of companies">
-    <ion-card-header>
-      <ion-card-title>{{ company.name }}</ion-card-title>
-      <ion-card-subtitle>{{ company.symbol }}</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <h2>{{company.current}}</h2>
-      <!-- <ion-icon name="remove-circle-outline"></ion-icon> -->
-    </ion-card-content>
-  </ion-card></ion-content
->
+  <ion-card class="card" *ngFor="let company of companies">
+    <img [src]="company.logo" [alt]="company.name" />
+    <a [href]="company.weburl"
+      ><ion-card-header>
+        <ion-card-title>{{ company.name }}</ion-card-title>
+        <ion-card-subtitle
+          >{{ company.symbol }} | {{company.exchange}}</ion-card-subtitle
+        >
+      </ion-card-header></a
+    >
+    <ion-card-content class="main">
+      <div class="price-container">
+        <ion-text class="current-price" size="large">
+          <h2 style="font-size: 1.5rem; display: inline-block">
+            <strong> {{company.current | number : "1.2-2"}}</strong> USD
+          </h2>
+        </ion-text>
+        <ion-icon
+          class="icon"
+          size="large"
+          color="success"
+          *ngIf="company.current > company.lowestOfDay"
+          name="trending-up-outline"
+        ></ion-icon>
+        <ion-icon
+          class="icon"
+          size="large"
+          color="danger"
+          *ngIf="company.current < company.lowestOfDay"
+          name="trending-down-outline"
+        ></ion-icon>
+        <ion-icon
+          class="icon"
+          size="large"
+          color="success"
+          name="reorder-two-outline"
+          *ngIf="company.current === company.lowestOfDay"
+        ></ion-icon>
+      </div> </ion-card-content
+    ><ion-icon
+      (click)="removeFav(company.symbol)"
+      class="button"
+      name="remove-circle-outline"
+    ></ion-icon> </ion-card
+></ion-content>
