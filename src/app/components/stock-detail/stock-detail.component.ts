@@ -26,6 +26,7 @@ import { environment } from 'src/environments/environment';
 import { Preferences } from '@capacitor/preferences';
 import * as dayjs from 'dayjs';
 import { News } from 'src/app/models/news.model';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-stock-detail',
@@ -100,20 +101,25 @@ export class StockDetailComponent implements OnInit {
         });
 
       const today = dayjs().format('YYYY-MM-DD');
+      const yesterday = dayjs(-1).format('YYYY-MM-DD');
 
       this.http
         .get(
-          `${API_BASE_URL}/company-news?symbol=${this.symbol}&from=${today}&to=${today}&token=${API_KEY}`
+          `${API_BASE_URL}/company-news?symbol=${this.symbol}&from=${yesterday}&to=${today}&token=${API_KEY}`
         )
         .subscribe((res: any) => {
-          this.latestNews = res.map((news: any) => {
-            return {
-              headline: news.headline,
-              summary: news.summary,
-              related: news.related,
-              url: news.url,
-            };
-          });
+          pipe(
+            (this.latestNews = res
+              .map((news: any) => {
+                return {
+                  headline: news.headline,
+                  summary: news.summary,
+                  related: news.related,
+                  url: news.url,
+                };
+              })
+              .slice(0, 10))
+          );
         });
     });
   }
