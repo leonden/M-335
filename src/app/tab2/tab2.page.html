@@ -9,9 +9,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <ion-card *ngFor="let company of companies">
+    <ion-card-header>
+      <ion-card-title>{{ company.name }}</ion-card-title>
+      <ion-card-subtitle>{{ company.symbol }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <h2>{{company.current}}</h2>
+      <!-- <ion-icon name="remove-circle-outline"></ion-icon> -->
+    </ion-card-content>
+  </ion-card></ion-content
+>
