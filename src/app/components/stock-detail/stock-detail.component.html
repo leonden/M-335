@@ -24,5 +24,24 @@
     </h2>
 
     <iframe [src]="iframeSafeUrl" class="stock-chart" frameborder="0"></iframe>
+    <div class="news-container">
+      <h2>Latest News</h2>
+      <ion-list>
+        <ion-item *ngFor="let news of latestNews">
+          <ion-label>
+            <a [href]="news.url"
+              ><h3>{{ news.headline }}</h3></a
+            >
+            <p>{{ news.summary }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
 </ion-content>
+<ion-toast
+  class="toast"
+  trigger="open-toast"
+  message="This toast will disappear after 5 seconds"
+  [duration]="5000"
+></ion-toast>
