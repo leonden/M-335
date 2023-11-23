@@ -8,7 +8,6 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonBackButton,
   IonIcon,
   IonList,
   IonItem,
@@ -19,7 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 import { StockDetail } from 'src/app/models/stock-detail.model';
 import { CommonModule } from '@angular/common';
-import { heartOutline, logoPaypal } from 'ionicons/icons';
+import { heartOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
