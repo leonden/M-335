@@ -50,9 +50,6 @@ export class Tab3Page implements OnInit {
       .get(`${API_BASE_URL}/news?category=general&token=${API_KEY}`)
       .subscribe(
         (res: any) => {
-          console.log('API Response:', res);
-          console.log('API Response:', res[0].headline);
-
           // Check if the response has the required properties
           if (res) {
             res.forEach((newsItem: any) => {
@@ -67,8 +64,6 @@ export class Tab3Page implements OnInit {
               this.news.push(article);
             });
           }
-
-          console.log('Updated News Array:', this.news);
         },
         (error) => {
           console.error('API Error:', error);
