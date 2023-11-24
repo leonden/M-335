@@ -9,9 +9,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card class="card" *ngFor="let article of news">
+    <img [src]="article.image" />
+    <a [href]="article.url"
+      ><ion-card-header>
+        <ion-card-title class="headline">{{ article.headline }}</ion-card-title>
+      </ion-card-header></a
+    >
+    <ion-card-content>
+      <ion-text class="summary" size="small"> {{ article.summary }} </ion-text>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
