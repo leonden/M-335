@@ -9,7 +9,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="content">
+  <div class="overlay"></div>
+  <img [src]="logo.logo" [alt]="stockDetail.company" />
   <div class="detail-container">
     <h1>
       {{ stockDetail.company }}

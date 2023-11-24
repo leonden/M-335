@@ -57,6 +57,7 @@ export class StockDetailComponent implements OnInit {
   private favourite = false;
   public latestNews: News[] = [];
   private isToastOpen = false;
+  public logo: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -121,6 +122,14 @@ export class StockDetailComponent implements OnInit {
           );
         });
     });
+
+    this.http
+      .get(
+        `${API_BASE_URL}/stock/profile2?symbol=${this.symbol}&token=${API_KEY}`
+      )
+      .subscribe((res) => {
+        this.logo = res;
+      });
   }
 
   async saveData() {
