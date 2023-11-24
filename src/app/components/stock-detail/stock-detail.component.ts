@@ -116,6 +116,7 @@ export class StockDetailComponent implements OnInit {
                   summary: news.summary,
                   related: news.related,
                   url: news.url,
+                  image: news.image,
                 };
               })
               .slice(0, 10))
